@@ -1,0 +1,4 @@
+#Mon Apr 15 16:17:43 CEST 2019
+base.0=C\:\\Users\\Akhoriz\\Documents\\MyStadium\\cordovaMyStadium\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

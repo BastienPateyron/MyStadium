@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "MyStadium",
+  "short_name": "MyStadium",
+  "version": "io.cordova.hellocordova",
+  "description": "Play Football Everywhere",
+  "author": "Apache Cordova Team",
+  "icons": [],
+  "start_url": "login.html"
+}

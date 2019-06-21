@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <!-- LEAFLET -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+              integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+              crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+                integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+                crossorigin=""></script>
+
+        <!-- LEAFLET -->
+
+        <!-- GOOGLE -->
+        <meta name="google-signin-scope" content="https://www.googleapis.com/auth/photoslibrary.readonly">
+        <meta name="google-signin-client_id" content="861755368089-6auc2ehi75r3urefve3ndfpji66qot8i.apps.googleusercontent.com">
+        <!-- GOOGLE -->
+
+
+
+        <!-- LOGIN PAGE -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+        <!-- -->
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>MyStadium</title>
+    </head>
+    <body >
+
+
+                <div id="Layer1" style="position:absolute; left:0px; top:0px; width:100%; height:100%; z-index: 1"><img name="xxx" src="img/Background_MyStadium.png" style='width:100%; height:100%' alt=""></div>
+                <div id="Layer0" style="position:fixed; left:0px; top:0px; z-index:2"><img name="xxx" src="img/Black_Bar_only_MyStadium.png"  style='width:100%; height:10%' alt=""></div>
+
+                <div id="Layer3" style="position: relative; margin: auto; width: 75%; height: 75%; margin-top: 8%; z-index: 3;">
+                            <div class="container container--ph">
+                                <img name="yyy" src="img/MyStadiumlogo_white.png"  style="width: 100%;margin-bottom: 2px;">
+                                <img src="img/PROFIL.png" style="width:100%;margin-bottom: 10px;margin-top: 10px;">
+                                <img src="img/EQUIPE.png" style="width:100%;margin-bottom: 10px">
+                                <img src="img/PRET.png" style="width:100%;margin-bottom: 10px">
+                                <img src="img/LIGUES.png" style="width:100%;margin-bottom: 10px">
+                            </div>
+                </div>
+
+                <!-- LEAFLET -->
+
+               <!-- <div id="macarte" style="width:545px; height:490px"></div>-->
+
+                <!-- LEAFLET -->
+
+                <!-- FACEBOOK
+
+
+                <fb:login-button
+                        scope="public_profile,email"
+                        onlogin="checkLoginState();">
+                </fb:login-button>
+                <div id="status">
+                </div>
+                 FACEBOOK -->
+
+                <!-- GOOGLE
+                <a href="googletest.html"><div class="g-signin2" data-onsuccess="onSignIn"></div></a>
+                 -->
+
+
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+       <!-- <script type="text/javascript" src="js/facebook.js"></script>-->
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

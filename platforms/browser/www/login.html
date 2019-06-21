@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- GOOGLE -->
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/photoslibrary.readonly">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta name="google-signin-client_id" content="861755368089-6auc2ehi75r3urefve3ndfpji66qot8i.apps.googleusercontent.com">
+    <!-- GOOGLE -->
+
+
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCql6SM6-6phGDMIahAA_Klu_gyU3rB_BQ",
+            authDomain: "mystadium-fe722.firebaseapp.com",
+            authDomain: "localhost",
+            databaseURL: "https://mystadium-fe722.firebaseio.com",
+            projectId: "mystadium-fe722",
+            storageBucket: "mystadium-fe722.appspot.com",
+            messagingSenderId: "861755368089",
+            clientId: "861755368089-6auc2ehi75r3urefve3ndfpji66qot8i.apps.googleusercontent.com",
+            scopes: [
+                "email",
+                "profile"
+            ]
+        };
+        firebase.initializeApp(config);
+
+        var provider = new firebase.auth.FacebookAuthProvider();
+        function fbsign() {
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                // ...
+            }).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+            });
+        }
+
+    </script>
+
+    <!-- FIREBASE -->
+
+
+
+    <!-- LOGIN PAGE -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- -->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>MyStadium</title>
+</head>
+<body>
+<script type="text/javascript">
+    /**
+     * Function called when there is a change in Facebook auth state.
+     */
+    // [START facebookcallback]
+    function checkLoginState(event) {
+        if (event.authResponse) {
+            // User is signed-in Facebook.
+            var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
+                unsubscribe();
+                // Check if we are already signed-in Firebase with the correct user.
+                if (!isUserEqual(event.authResponse, firebaseUser)) {
+                    // Build Firebase credential with the Facebook auth token.
+                    // [START facebookcredential]
+                    var credential = firebase.auth.FacebookAuthProvider.credential(
+                        event.authResponse.accessToken);
+                    // [END facebookcredential]
+                    // Sign in with the credential from the Facebook user.
+                    // [START authwithcred]
+                    firebase.auth().signInAndRetrieveDataWithCredential(credential).catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // [START_EXCLUDE]
+                        if (errorCode === 'auth/account-exists-with-different-credential') {
+                            alert('You have already signed up with a different auth provider for that email.');
+                            // If you are using multiple auth providers on your app you should handle linking
+                            // the user's accounts here.
+                        } else {
+                            console.error(error);
+                        }
+                        // [END_EXCLUDE]
+                    });
+                    // [END authwithcred]
+                } else {
+                    // User is already signed-in Firebase with the correct user.
+                }
+            });
+        } else {
+            // User is signed-out of Facebook.
+            // [START signout]
+            firebase.auth().signOut();
+            // [END signout]
+        }
+    }
+    // [END facebookcallback]
+
+    /**
+     * Check that the given Facebook user is equals to the  given Firebase user
+     */
+    // [START checksameuser]
+    function isUserEqual(facebookAuthResponse, firebaseUser) {
+        if (firebaseUser) {
+            var providerData = firebaseUser.providerData;
+            for (var i = 0; i < providerData.length; i++) {
+                if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID &&
+                    providerData[i].uid === facebookAuthResponse.userID) {
+                    // We don't need to re-auth the Firebase connection.
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    // [END checksameuser]
+
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    function initApp() {
+        // Listening for auth state changes.
+        // [START authstatelistener]
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                console.log(displayName);
+                // [START_EXCLUDE]
+                document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+                document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+                // [END_EXCLUDE]
+            } else {
+                // User is signed out.
+                // [START_EXCLUDE]
+                // [END_EXCLUDE]
+            }
+        });
+        // [END authstatelistener]
+    }
+
+    initApp();
+</script>
+
+<!-- Facebook -->
+<!-- [START facebookconfig] -->
+<script src="//connect.facebook.net/en_US/sdk.js"></script>
+<script>
+    FB.init({
+        /**********************************************************************
+         * TODO(Developer): Change the value below with your Facebook app ID. *
+         **********************************************************************/
+        appId      : '845640525775005',
+        status     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+    });
+    // [START_EXCLUDE silent]
+    // Observe the change in Facebook login status
+    // [START facebookauthlistener]
+    FB.Event.subscribe('auth.authResponseChange', checkLoginState);
+    // [END facebookauthlistener]
+    // [END_EXCLUDE]
+</script>
+<!-- [END facebookconfig] -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.2&appId=845640525775005&autoLogAppEvents=1"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <img name="yyy" src="../img/MyStadiumlogo_white.png"  style="width: 100%;margin-bottom: 2px;">
+                <div class="card card-signin my-5">
+                    <center class="card-body">
+                        <h5 class="card-title text-center">Sign In</h5>
+                        <form class="form-signin">
+                            <div class="form-label-group">
+                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                <label for="inputEmail">Email address</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <label for="inputPassword">Password</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                        </form>
+                            <hr class="my-4">
+
+                            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                        <!-- [START facebook_button] -->
+                      <!--  <fb:login-button data-auto-logout-link="true" scope="public_profile,email" size="large">Connexion facebook</fb:login-button>-->
+                        <center>
+                        <div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                        </center>
+                            <!-- [END facebook_button] -->
+                            <!--<button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>-->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!--<a href="#" onclick="signOut();">Sign out</a>-->
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script type="text/javascript" src="js/login.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>
