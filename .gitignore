@@ -1,2 +1,4 @@
 *.tmp
 *.zip
+.idea/*
+.DS_Store
