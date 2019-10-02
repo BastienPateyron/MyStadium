@@ -15,7 +15,7 @@
     <script>
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyCql6SM6-6phGDMIahAA_Klu_gyU3rB_BQ",
+            apiKey: "AIzaSyCql6SM6-6phGDMIahAA_Klu_gyU3rB_BQ", //TRES DANGEREUX DE METTRE LA CLE API PUBLIC DANS UN REPO
             authDomain: "mystadium-fe722.firebaseapp.com",
             authDomain: "localhost",
             databaseURL: "https://mystadium-fe722.firebaseio.com",
@@ -145,11 +145,8 @@
      *    out, and that is where we update the UI.
      */
     function initApp() {
-        // Listening for auth state changes.
-        // [START authstatelistener]
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                // User is signed in.
                 var displayName = user.displayName;
                 var email = user.email;
                 var emailVerified = user.emailVerified;
@@ -158,17 +155,11 @@
                 var uid = user.uid;
                 var providerData = user.providerData;
                 console.log(displayName);
-                // [START_EXCLUDE]
                 document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
                 document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-                // [END_EXCLUDE]
             } else {
-                // User is signed out.
-                // [START_EXCLUDE]
-                // [END_EXCLUDE]
             }
         });
-        // [END authstatelistener]
     }
 
     initApp();
@@ -187,12 +178,7 @@
         xfbml      : true,
         version    : 'v3.2'
     });
-    // [START_EXCLUDE silent]
-    // Observe the change in Facebook login status
-    // [START facebookauthlistener]
     FB.Event.subscribe('auth.authResponseChange', checkLoginState);
-    // [END facebookauthlistener]
-    // [END_EXCLUDE]
 </script>
 <!-- [END facebookconfig] -->
 <div id="fb-root"></div>
@@ -224,13 +210,9 @@
                             <hr class="my-4">
 
                             <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-                        <!-- [START facebook_button] -->
-                      <!--  <fb:login-button data-auto-logout-link="true" scope="public_profile,email" size="large">Connexion facebook</fb:login-button>-->
                         <center>
                         <div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
                         </center>
-                            <!-- [END facebook_button] -->
-                            <!--<button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>-->
 
 
                     </div>
@@ -239,7 +221,7 @@
         </div>
     </div>
 
- <!--<a href="#" onclick="signOut();">Sign out</a>-->
+ <a href="#" onclick="signOut();">Sign out</a>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
