@@ -1,8 +1,8 @@
 {
     "name": "MyStadium",
     "displayName": "MyStadium",
-    "version": "1.0.0",
-    "description": "Play Football Everywhere",
+    "version": "1.0.1",
+    "description": "Play Football Everywhere & ShuffleIn",
     "main": "login.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
